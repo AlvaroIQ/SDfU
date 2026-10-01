@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Day for Ummiey! ✨</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(244, 114, 182, 0.25);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(236, 72, 153, 0.4); }
+            50% { box-shadow: 0 0 45px rgba(168, 85, 247, 0.7); }
+        }
+        .glow-effect {
+            animation: pulseGlow 3s infinite;
+        }
+        .hidden-section {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-pink-100 text-gray-800 min-h-screen relative overflow-x-hidden">
+
+    <div class="absolute inset-0 pointer-events-none overflow-hidden z-0 opacity-30">
+        <div class="absolute top-10 left-10 text-pink-400 text-3xl animate-float"><i class="fa-solid fa-heart"></i></div>
+        <div class="absolute top-1/4 right-16 text-purple-400 text-4xl animate-float" style="animation-delay: 1s;"><i class="fa-solid fa-spa"></i></div>
+        <div class="absolute top-1/2 left-1/4 text-pink-300 text-2xl animate-float" style="animation-delay: 2s;"><i class="fa-solid fa-star"></i></div>
+        <div class="absolute bottom-20 right-1/3 text-purple-300 text-3xl animate-float" style="animation-delay: 1.5s;"><i class="fa-solid fa-heart"></i></div>
+        <div class="absolute bottom-10 left-12 text-pink-400 text-4xl animate-float" style="animation-delay: 2.5s;"><i class="fa-solid fa-gift"></i></div>
+    </div>
+
+    <!-- ================= 1. LANDING PAGE & COUNTDOWN TIMER ================= -->
+    <div id="landingPage" class="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="max-w-md w-full glass-card rounded-3xl p-8 sm:p-10 shadow-2xl text-center space-y-6 border border-pink-200">
+            
+            <div class="inline-block p-2 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 glow-effect">
+                <img src="https://placehold.co/150x150/fce7f3/831843?text=Umi+%E2%99%A1" alt="Umi Tercinta" onerror="this.src='https://placehold.co/150x150/f3e8ff/581c87?text=Umi'" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto">
+            </div>
+
+            <div class="space-y-2">
+                <span class="bg-pink-100 text-pink-700 text-xs font-semibold px-4 py-1.5 rounded-full uppercase tracking-widest border border-pink-200">22 Oktober • 06:06 WIB</span>
+                <h1 class="font-playfair text-3xl sm:text-4xl font-bold text-purple-900 tracking-tight leading-tight">
+                    Special Day for <span class="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">Ummiey!</span>
+                </h1>
+                <p class="text-gray-600 text-xs sm:text-sm font-light leading-relaxed">
+                    Kejutan istimewa ini akan terbuka otomatis saat hitung mundur berakhir.
+                </p>
+            </div>
+
+            <!-- Countdown Display Box -->
+            <div class="grid grid-cols-4 gap-2 py-3">
+                <div class="bg-white/80 border border-pink-100 rounded-2xl p-2.5 shadow-sm">
+                    <span id="days" class="font-playfair text-xl sm:text-2xl font-bold text-purple-900 block">00</span>
+                    <span class="text-[10px] uppercase font-semibold text-pink-600">Hari</span>
+                </div>
+                <div class="bg-white/80 border border-pink-100 rounded-2xl p-2.5 shadow-sm">
+                    <span id="hours" class="font-playfair text-xl sm:text-2xl font-bold text-purple-900 block">00</span>
+                    <span class="text-[10px] uppercase font-semibold text-pink-600">Jam</span>
+                </div>
+                <div class="bg-white/80 border border-pink-100 rounded-2xl p-2.5 shadow-sm">
+                    <span id="minutes" class="font-playfair text-xl sm:text-2xl font-bold text-purple-900 block">00</span>
+                    <span class="text-[10px] uppercase font-semibold text-pink-600">Menit</span>
+                </div>
+                <div class="bg-white/80 border border-pink-100 rounded-2xl p-2.5 shadow-sm">
+                    <span id="seconds" class="font-playfair text-xl sm:text-2xl font-bold text-purple-900 block">00</span>
+                    <span class="text-[10px] uppercase font-semibold text-pink-600">Detik</span>
+                </div>
+            </div>
+
+            <!-- Action Button (Strictly Locked until time arrives) -->
+            <div class="space-y-3 pt-2">
+                <button id="enterBtn" disabled class="w-full bg-gray-300 text-gray-500 font-semibold py-4 rounded-2xl shadow-inner cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base transition-all duration-300">
+                    <i class="fa-solid fa-lock"></i>
+                    <span id="btnText">Menunggu Waktu Tiba...</span>
+                </button>
+                <p id="lockNotice" class="text-xs text-purple-700 italic font-light">
+                    🔒 Pintu kejutan terkunci aman sampai 22 Oktober 2026 pukul 06:06 WIB.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= 2. MAIN WEBSITE CONTENT (TERSEMBUNYI) ================= -->
+    <div id="mainContent" class="hidden-section">
+        
+        <!-- Navbar & Audio Control -->
+        <nav class="fixed top-0 left-0 right-0 z-50 glass-card px-4 py-3 shadow-sm flex justify-between items-center max-w-4xl mx-auto rounded-b-2xl mt-0 sm:mt-3">
+            <div class="flex items-center space-x-2">
+                <span class="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-2 rounded-full shadow-md">
+                    <i class="fa-solid fa-cake-candles"></i>
+                </span>
+                <span class="font-playfair font-bold text-lg text-purple-900">Umi's Special Day</span>
+            </div>
+            <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-md hover:opacity-90 transition flex items-center space-x-2">
+                <i id="musicIcon" class="fa-solid fa-music"></i>
+                <span id="musicText">Putar Musik</span>
+            </button>
+        </nav>
+
+        <audio id="bgMusic" loop>
+            <source src="https://actions.google.com/sounds/v1/ambiences/gentle_wind.ogg" type="audio/ogg">
+        </audio>
+
+        <main class="relative z-10 max-w-4xl mx-auto px-4 pt-28 pb-16 space-y-16">
+
+            <!-- Header Utama Dalam -->
+            <section class="text-center space-y-6 pt-6">
+                <div class="inline-block p-1 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 glow-effect mb-2">
+                    <img src="https://placehold.co/180x180/fce7f3/831843?text=Umi+%E2%99%A1" alt="Umi Tercinta" onerror="this.src='https://placehold.co/180x180/f3e8ff/581c87?text=Umi'" class="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-white shadow-xl mx-auto">
+                </div>
+                
+                <div class="space-y-2">
+                    <span class="bg-pink-100 text-pink-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest border border-pink-200">22 Oktober 2026</span>
+                    <h1 class="font-playfair text-4xl sm:text-6xl font-bold text-purple-900 tracking-tight">
+                        Selamat Ulang Tahun<br><span class="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent">Umi Tercinta</span>
+                    </h1>
+                    <p class="text-gray-600 max-w-lg mx-auto text-base sm:text-lg font-light leading-relaxed">
+                        Terima kasih atas segala cinta, kesabaran, dan kehangatan yang selalu Umi berikan. Hari ini adalah hari merayakan wanita paling istimewa di hidup kami! 💖
+                    </p>
+                </div>
+
+                <div class="flex justify-center gap-4 pt-2">
+                    <button onclick="triggerConfetti()" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200 flex items-center space-x-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Kirim Kejutan!</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Galeri Foto Kenangan -->
+            <section class="space-y-6">
+                <div class="text-center space-y-1">
+                    <h2 class="font-playfair text-3xl font-bold text-purple-900">Galeri Kenangan Manis</h2>
+                    <p class="text-gray-500 text-sm">Momen-momen indah penuh senyuman bersama Umi</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="group relative overflow-hidden rounded-3xl shadow-md bg-white p-2 border border-pink-100 transform hover:-translate-y-1 transition duration-300">
+                        <div class="overflow-hidden rounded-2xl aspect-square bg-pink-50">
+                            <img src="https://placehold.co/400x400/fbcfe8/831843?text=Senyum+Umi" alt="Kenangan 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-4 text-center">
+                            <h3 class="font-semibold text-purple-900">Senyuman Paling Indah</h3>
+                            <p class="text-xs text-gray-500 mt-1">Kebahagiaan sederhana bersama keluarga tercinta.</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-3xl shadow-md bg-white p-2 border border-pink-100 transform hover:-translate-y-1 transition duration-300">
+                        <div class="overflow-hidden rounded-2xl aspect-square bg-purple-50">
+                            <img src="https://placehold.co/400x400/e9d5ff/581c87?text=Momen+Hangat" alt="Kenangan 2" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-4 text-center">
+                            <h3 class="font-semibold text-purple-900">Momen Hangat Bersama</h3>
+                            <p class="text-xs text-gray-500 mt-1">Kasih sayang Umi takkan pernah terganti.</p>
+                        </div>
+                    </div>
+                    <div class="group relative overflow-hidden rounded-3xl shadow-md bg-white p-2 border border-pink-100 transform hover:-translate-y-1 transition duration-300 sm:col-span-2 md:col-span-1">
+                        <div class="overflow-hidden rounded-2xl aspect-square bg-pink-50">
+                            <img src="https://placehold.co/400x400/fce7f3/9d174d?text=Pahlawan+Hati" alt="Kenangan 3" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-4 text-center">
+                            <h3 class="font-semibold text-purple-900">Pahlawan di Hati Kami</h3>
+                            <p class="text-xs text-gray-500 mt-1">Wanita hebat tempat kami bersandar.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Surat Cinta & Doa dari Anak -->
+            <section class="glass-card rounded-3xl p-6 sm:p-10 shadow-lg border border-pink-200 relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 text-pink-100 text-9xl pointer-events-none">
+                    <i class="fa-solid fa-quote-right"></i>
+                </div>
+                
+                <div class="relative z-10 space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="bg-purple-100 text-purple-700 p-3 rounded-2xl">
+                            <i class="fa-solid fa-heart-pulse text-xl"></i>
+                        </span>
+                        <div>
+                            <h2 class="font-playfair text-2xl sm:text-3xl font-bold text-purple-900">Surat Cinta & Doa untuk Umi</h2>
+                            <p class="text-gray-500 text-xs sm:text-sm">Dari lubuk hati yang paling dalam</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-gray-700 leading-relaxed font-light text-sm sm:text-base pt-2">
+                        <p>
+                            "Umi, terima kasih karena selalu sabar mendidik, merawat, dan mencintai kami tanpa batas. Setiap doa yang Umi panjatkan adalah pelindung dan kekuatan terbesar dalam hidup kami."
+                        </p>
+                        <p>
+                            "Semoga di usia yang baru ini, Allah SWT senantiasa melimpahkan kesehatan yang prima, umur panjang yang barokah, kebahagiaan batin, serta ketenangan hati. Semoga Umi selalu dikelilingi oleh cinta dan senyuman setiap harinya. Amiin ya Rabbal 'alamin."
+                        </p>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-between border-t border-pink-100">
+                        <span class="font-playfair italic font-semibold text-purple-800">Anak-anakmu tersayang 💖</span>
+                        <span class="text-xs text-pink-600 bg-pink-50 px-3 py-1 rounded-full border border-pink-200">22 Oktober 2026</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dinding Ucapan Interaktif (Wall of Wishes) -->
+            <section class="space-y-6">
+                <div class="text-center space-y-1">
+                    <h2 class="font-playfair text-3xl font-bold text-purple-900">Dinding Ucapan Spesial</h2>
+                    <p class="text-gray-500 text-sm">Tuliskan pesan dan doa manis untuk Umi di sini!</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 sm:p-8 shadow-md border border-pink-200">
+                    <form id="wishForm" onsubmit="handleWishSubmit(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-purple-900 uppercase tracking-wider mb-1">Nama Pengirim</label>
+                                <input type="text" id="senderName" required placeholder="Contoh: Kakak / Adik" class="w-full px-4 py-3 rounded-xl bg-white border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-purple-900 uppercase tracking-wider mb-1">Panggilan untuk Umi</label>
+                                <input type="text" id="recipientTitle" value="Umi Tercinta" class="w-full px-4 py-3 rounded-xl bg-white border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-purple-900 uppercase tracking-wider mb-1">Pesan & Doa</label>
+                            <textarea id="senderMessage" rows="3" required placeholder="Tuliskan ucapan ulang tahun atau doa terbaikmu di sini..." class="w-full px-4 py-3 rounded-xl bg-white border border-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold py-3 rounded-xl shadow-md hover:opacity-95 transition text-sm flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Kirim Ucapan untuk Umi</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div id="wishesContainer" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-2xl p-5 shadow-sm border border-purple-100 space-y-2 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-purple-100 text-purple-600 px-3 py-1 rounded-bl-xl text-xs font-medium">Anak-anak</div>
+                        <h3 class="font-semibold text-purple-900 text-sm">Anakmu Tercinta</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">"Selamat ulang tahun Umi! Doa terbaik selalu menyertai langkah Umi. We love you so much!"</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center py-8 text-gray-500 text-xs space-y-2 border-t border-pink-200/50 mt-12 bg-white/40">
+            <p class="font-playfair text-purple-900 font-semibold text-sm">Dibuat dengan penuh cinta untuk Umi Tercinta 🤍</p>
+            <p>© 2026 • Spesial Hari Ulang Tahun Umi (22 Oktober)</p>
+        </footer>
+
+    </div>
+
+    <!-- JavaScript Logic & Strict Countdown Control -->
+    <script>
+        // Target waktu buka: 22 Oktober 2026 jam 06:06:00
+        const targetUnlockTime = new Date('October 22, 2026 06:06:00').getTime();
+        let isUnlocked = false;
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetUnlockTime - now;
+
+            if (distance <= 0) {
+                // Waktu sudah tiba! Buka kunci otomatis
+                if (!isUnlocked) {
+                    isUnlocked = true;
+                    activateUnlockState();
+                }
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
+        }
+
+        function activateUnlockState() {
+            const btn = document.getElementById('enterBtn');
+            btn.disabled = false;
+            btn.className = "w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-semibold py-4 rounded-2xl shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition duration-200 flex items-center justify-center space-x-2 text-base cursor-pointer";
+            btn.innerHTML = `<i class="fa-solid fa-gift"></i><span>Buka Kejutan Umi Sekarang!</span>`;
+            btn.setAttribute('onclick', 'enterMainSite()');
+
+            document.getElementById('lockNotice').innerHTML = `🎉 Waktu istimewa telah tiba! Silakan klik tombol di atas.`;
+            document.getElementById('lockNotice').className = "text-xs text-pink-600 font-semibold";
+        }
+
+        function enterMainSite() {
+            if (!isUnlocked) return;
+            
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('mainContent').classList.remove('hidden-section');
+            
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.5 },
+                colors: ['#ec4899', '#a855f7', '#f472b6', '#c084fc', '#ffffff']
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Jalankan hitung mundur setiap detik
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Cek langsung saat halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            if (new Date().getTime() >= targetUnlockTime) {
+                isUnlocked = true;
+                activateUnlockState();
+            }
+        });
+
+        // Audio Background Toggle
+        let isPlaying = false;
+        const bgMusic = document.getElementById('bgMusic');
+        const musicIcon = document.getElementById('musicIcon');
+        const musicText = document.getElementById('musicText');
+
+        function toggleBackgroundMusic() {
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicIcon.className = "fa-solid fa-volume-high";
+                    musicText.innerText = "Matikan Musik";
+                }).catch(error => {
+                    console.log("Audio play blocked or unavailable:", error);
+                });
+            } else {
+                bgMusic.pause();
+                isPlaying = false;
+                musicIcon.className = "fa-solid fa-music";
+                musicText.innerText = "Putar Musik";
+            }
+        }
+
+        // Dynamic Wall of Wishes Handler
+        function handleWishSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('senderName').value.trim();
+            const message = document.getElementById('senderMessage').value.trim();
+            
+            if (!name || !message) return;
+
+            const wishesContainer = document.getElementById('wishesContainer');
+            
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-2xl p-5 shadow-sm border border-pink-100 space-y-2 relative overflow-hidden transform scale-95 opacity-0 transition-all duration-300";
+            
+            card.innerHTML = `
+                <div class="absolute top-0 right-0 bg-pink-100 text-pink-600 px-3 py-1 rounded-bl-xl text-xs font-medium">Baru Saja</div>
+                <h3 class="font-semibold text-purple-900 text-sm">${escapeHtml(name)}</h3>
+                <p class="text-xs text-gray-600 leading-relaxed">"${escapeHtml(message)}"</p>
+            `;
+            
+            wishesContainer.prepend(card);
+            
+            setTimeout(() => {
+                card.classList.remove('scale-95', 'opacity-0');
+            }, 50);
+
+            confetti({
+                particleCount: 60,
+                spread: 60,
+                origin: { y: 0.7 }
+            });
+
+            document.getElementById('wishForm').reset();
+        }
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+    </script>
+</body>
+</html>
