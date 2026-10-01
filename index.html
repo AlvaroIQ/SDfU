@@ -17,7 +17,7 @@
             font-family: 'Playfair Display', serif;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(244, 114, 182, 0.25);
         }
@@ -54,8 +54,9 @@
     <div id="landingPage" class="relative z-10 min-h-screen flex items-center justify-center px-4 py-12">
         <div class="max-w-md w-full glass-card rounded-3xl p-8 sm:p-10 shadow-2xl text-center space-y-6 border border-pink-200">
             
+            <!-- Foto Umi di Countdown / Landing Page -->
             <div class="inline-block p-2 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 glow-effect">
-                <img src="https://placehold.co/150x150/fce7f3/831843?text=Umi+%E2%99%A1" alt="Umi Tercinta" onerror="this.src='https://placehold.co/150x150/f3e8ff/581c87?text=Umi'" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto">
+                <img src="https://i.ibb.co.com/Z1bwXZfw/u-a.jpg" alt="Umi Tercinta" onerror="this.src='https://placehold.co/150x150/fce7f3/831843?text=Umi+%E2%99%A1'" class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-md mx-auto">
             </div>
 
             <div class="space-y-2">
@@ -88,9 +89,9 @@
                 </div>
             </div>
 
-            <!-- Action Button (Strictly Locked until time arrives) -->
+            <!-- Action Button (Strictly Locked until time arrives, no bypass) -->
             <div class="space-y-3 pt-2">
-                <button id="enterBtn" disabled class="w-full bg-gray-300 text-gray-500 font-semibold py-4 rounded-2xl shadow-inner cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base transition-all duration-300">
+                <button id="enterBtn" disabled class="w-full bg-gray-200 text-gray-400 font-semibold py-4 rounded-2xl shadow-inner cursor-not-allowed flex items-center justify-center space-x-2 text-sm sm:text-base transition-all duration-300">
                     <i class="fa-solid fa-lock"></i>
                     <span id="btnText">Menunggu Waktu Tiba...</span>
                 </button>
@@ -128,7 +129,7 @@
             <!-- Header Utama Dalam -->
             <section class="text-center space-y-6 pt-6">
                 <div class="inline-block p-1 rounded-full bg-gradient-to-r from-pink-400 to-purple-500 glow-effect mb-2">
-                    <img src="https://placehold.co/180x180/fce7f3/831843?text=Umi+%E2%99%A1" alt="Umi Tercinta" onerror="this.src='https://placehold.co/180x180/f3e8ff/581c87?text=Umi'" class="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-white shadow-xl mx-auto">
+                    <img src="https://i.ibb.co.com/Z1bwXZfw/u-a.jpg" alt="Umi Tercinta" onerror="this.src='https://placehold.co/180x180/fce7f3/831843?text=Umi+%E2%99%A1'" class="w-36 h-36 sm:w-44 sm:h-44 rounded-full object-cover border-4 border-white shadow-xl mx-auto">
                 </div>
                 
                 <div class="space-y-2">
@@ -159,7 +160,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <div class="group relative overflow-hidden rounded-3xl shadow-md bg-white p-2 border border-pink-100 transform hover:-translate-y-1 transition duration-300">
                         <div class="overflow-hidden rounded-2xl aspect-square bg-pink-50">
-                            <img src="https://placehold.co/400x400/fbcfe8/831843?text=Senyum+Umi" alt="Kenangan 1" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <img src="https://i.ibb.co.com/Z1bwXZfw/u-a.jpg" alt="Senyum Umi" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                         </div>
                         <div class="p-4 text-center">
                             <h3 class="font-semibold text-purple-900">Senyuman Paling Indah</h3>
@@ -268,7 +269,7 @@
 
     </div>
 
-    <!-- JavaScript Logic & Strict Countdown Control -->
+    <!-- ================= 3. SCRIPT LOGIC (COUNTDOWN & INTERACTIONS) ================= -->
     <script>
         // Target waktu buka: 22 Oktober 2026 jam 06:06:00
         const targetUnlockTime = new Date('October 22, 2026 06:06:00').getTime();
@@ -279,7 +280,6 @@
             const distance = targetUnlockTime - now;
 
             if (distance <= 0) {
-                // Waktu sudah tiba! Buka kunci otomatis
                 if (!isUnlocked) {
                     isUnlocked = true;
                     activateUnlockState();
@@ -319,14 +319,17 @@
             document.getElementById('landingPage').style.display = 'none';
             document.getElementById('mainContent').classList.remove('hidden-section');
             
+            triggerConfetti();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function triggerConfetti() {
             confetti({
                 particleCount: 150,
                 spread: 90,
                 origin: { y: 0.5 },
                 colors: ['#ec4899', '#a855f7', '#f472b6', '#c084fc', '#ffffff']
             });
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // Jalankan hitung mundur setiap detik
@@ -364,7 +367,7 @@
             }
         }
 
-        // Dynamic Wall of Wishes Handler
+        // Dynamic Wall of Wishes Handler (Mulai dari bersih)
         function handleWishSubmit(event) {
             event.preventDefault();
             
